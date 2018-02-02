@@ -1,70 +1,71 @@
 <?php
 session_start();
-$idUser = '1';
-$login = 'Kevin';
-$password = 'root';
-$url = 'http://157e3dc2.ngrok.io/app_dev.php/';
-
-
-
-
-$post = [
-    'login' => $login,
-    'password' => $password,
-];
-
-$ch = curl_init($url.'user');
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-curl_setopt($ch, CURLOPT_POSTFIELDS, $post);
-// execute!
-$response = curl_exec($ch);
-// close the connection, release resources used
-curl_close($ch);
-$devices = json_decode($response);
-echo "<pre>";
-var_dump($devices);
-exit();
-
-
-
-
-
 
 if(isset($_POST['valid'])){
-    $idDevice = $_POST['idDevice'];
-    $alert = $_POST['alert-progress'];
+    $url = 'http://6c54c236.ngrok.io/app_dev.php/';
+
+    $login = $_POST['login'];
+    $password = $_POST['password'];
 
     $post = [
-        'id' => $idDevice,
-        'alarm' => $alert,
+        'login' => $login,
+        'password' => $password,
     ];
 
-    $ch = curl_init($url.'alarm');
+    $ch = curl_init($url.'user');
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($ch, CURLOPT_POSTFIELDS, $post);
     $response = curl_exec($ch);
     curl_close($ch);
-    $devices = json_decode($response);
-    var_dump($alert);exit();
+    $resu = json_decode($response);
 
-}
+    if ($resu){
 
-$post = [
-    'user_id' => 1,
-];
-
-$ch = curl_init($url.'user-all-devices');
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-curl_setopt($ch, CURLOPT_POSTFIELDS, $post);
-// execute!
-$response = curl_exec($ch);
-// close the connection, release resources used
-curl_close($ch);
-$devices = json_decode($response);
+        $_SESSION['login'] =  $resu->user[0]->login ;
+        $_SESSION['password'] =  $resu->user[0]->password ;
+        header("Location:homepage.php");
+    }else{
+        $error = true;
+    }
+} ?>
 
 
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>connexion</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+        <link rel="stylesheet" type="text/css" href="vue/index.css">
+    </head>
+    <body>
 
 
+        <h1 class="text-center title" >Forlmulaire de connexion</h1>
+        <form class="form-horizontal" method="post" action="">
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="login">Login:</label>
+                <div class="col-sm-10">
+                    <input type="text" name="login" class="form-control" id="login" placeholder="Enter login">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="pwd">Mot de passe:</label>
+                <div class="col-sm-10">
+                    <input type="password" name="password" class="form-control" id="pwd" placeholder="Enter password">
+                </div>
+            </div>
 
-
-include 'vue/vue.php';
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <button id="valid" name="valid" class="btn btn-info center-block">Valider</button>
+                </div>
+            </div>
+        </form>
+        <?php if (isset($error)): ?>
+            <div class="alert alert-danger">
+                <strong>Mot de passe ou login faux </strong>
+            </div>
+        <?php endif;?>
+    </body>
+</html>

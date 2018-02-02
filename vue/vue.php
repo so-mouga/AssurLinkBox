@@ -7,32 +7,36 @@
     <link rel="stylesheet" type="text/css" href="../css/vue.css">
 </head>
 <body>
+<form class="form-horizontal" method="post" action="../index.php">
+    <button id="deco" name="deco" class="btn btn-info center-block">deco</button>
+</form>
 
 
 
-        <?php foreach ($devices as $device): ?>
-        <form class="form-horizontal" method="post" action="../index.php">
-            <ul class="list-group">
+    <?php foreach ($devices->userDevice as $device ): ?>
+    <form class="form-horizontal" method="post" action="../index.php">
+        <ul class="list-group">
 <!--            --><?/* echo "<pre>";print_r($device);  */?>
-                <li  class="list-group-item <?php if($device->alert):?>list-group-item-danger<?php endif;?>">
-                    <?php if (!$device->alert): ?>
-                        <label >déclarer un incident pour : <? echo($device->device->name)?></label>
-                    <?php else:;?>
-                        <p>l'alarme à été déclarer à l'assurance</p>
-                        <label >fermer la demande d'alarme en cours</label>
-                    <?php endif;?>
-                    <div class="form-group">
-                        <div class="col-sm-offset-2 col-sm-10">
-                            <button id="valid" name="valid" class="btn btn-info center-block">envoyer</button>
-                        </div>
+            <li  class="list-group-item <?php if($device->alert):?>list-group-item-danger<?php endif;?>">
+                <?php if (!$device->alert): ?>
+                    <label >déclarer un incident pour : <? echo($device->device->name)?></label>
+                <?php else:;?>
+                    <p>l'alarme à été déclarer à l'assurance</p>
+                    <label >fermer la demande d'alarme en cours</label>
+                <?php endif;?>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button id="valid" name="valid" class="btn btn-info center-block">envoyer</button>
                     </div>
-                    <input type="hidden" name="idDevice" value="<? echo $device->id ?>">
-                    <input type="hidden" name="alert-progress" value="<? echo $device->alert ?>">
-                    <? echo $device->alert ?>
-                </li>
-            </ul>
-        </form>
-        <?php endforeach; exit(); ?>
+                </div>
+                <input type="hidden" name="idDevice" value="<? echo $device->id ?>">
+                <input type="hidden" name="alert-progress" value="<? echo $device->alert ?>">
+            </li>
+        </ul>
+    </form>
+
+        <?php endforeach;  ?>
+        <?php exit(); ?>
 
 
 
