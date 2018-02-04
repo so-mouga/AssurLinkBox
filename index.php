@@ -2,7 +2,7 @@
 session_start();
 
 if(isset($_POST['valid'])){
-    $url = 'http://6c54c236.ngrok.io/app_dev.php/';
+    $url = 'http://localhost/app_dev.php';
 
     $login = $_POST['login'];
     $password = $_POST['password'];
@@ -12,14 +12,14 @@ if(isset($_POST['valid'])){
         'password' => $password,
     ];
 
-    $ch = curl_init($url.'user');
+    $ch = curl_init($url.'/user');
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($ch, CURLOPT_POSTFIELDS, $post);
     $response = curl_exec($ch);
     curl_close($ch);
     $resu = json_decode($response);
 
-    if ($resu){
+    if (!$resu->error){
 
         $_SESSION['login'] =  $resu->user[0]->login ;
         $_SESSION['password'] =  $resu->user[0]->password ;
@@ -41,7 +41,7 @@ if(isset($_POST['valid'])){
     <body>
 
 
-        <h1 class="text-center title" >Forlmulaire de connexion</h1>
+        <h1 class="text-center title" >Formulaire de connexion</h1>
         <form class="form-horizontal" method="post" action="">
             <div class="form-group">
                 <label class="control-label col-sm-2" for="login">Login:</label>

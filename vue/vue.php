@@ -7,14 +7,15 @@
     <link rel="stylesheet" type="text/css" href="../css/vue.css">
 </head>
 <body>
+<p>bonjour : <? echo $devices->user[0]->login ?></p>
 <form class="form-horizontal" method="post" action="../index.php">
-    <button id="deco" name="deco" class="btn btn-info center-block">deco</button>
+    <button id="deco" name="deco" class="btn btn-warning center-block">déconnexion</button>
 </form>
 
 
 
     <?php foreach ($devices->userDevice as $device ): ?>
-    <form class="form-horizontal" method="post" action="../index.php">
+    <form class="form-horizontal" method="post" action="../homepage.php">
         <ul class="list-group">
 <!--            --><?/* echo "<pre>";print_r($device);  */?>
             <li  class="list-group-item <?php if($device->alert):?>list-group-item-danger<?php endif;?>">
