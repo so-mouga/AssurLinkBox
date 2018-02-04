@@ -5,7 +5,9 @@ Cette application à besoin de functionner avec :
 ~~~
 https://github.com/so-mouga/AssurLink
 ~~~
-Assures-toi d'avoir suivi l'installation avant de continuer.
+Assures-toi d'avoir suivi  et qu'aucun service est sur le ports 9999 avant de poursuivre l'installation.
+
+
 
 ## Installation
 Clone le repository
